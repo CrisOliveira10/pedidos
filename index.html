@@ -5,207 +5,283 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pedido de Convite | Crispoparte</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
   <style>
+    /* PALETA CRISPOPARTE */
     :root {
-      --bg: #f8f3ef;
-      --card: #ffffff;
-      --ink: #5c4037;
-      --soft: #8f6f66;
-      --accent: #c79d8a;
-      --accent-light: #f3e5de;
-      --whatsapp: #25D366;
-      --shadow: 0 12px 30px rgba(92, 64, 55, 0.1);
+      --primaria: #a34fce;   /* Roxo */
+      --secundaria: #19bbb5; /* Turquesa */
+      --destaque: #fd5682;   /* Rosa/Coral */
+      --texto: #443654;      /* Escuro */
+      --fundo: #d8d6dc;      /* Cinza claro */
+      --branco: #ffffff;
     }
 
     * { box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background-color: var(--bg);
-      color: var(--ink);
+      margin: 0; font-family: 'Nunito', sans-serif;
+      background-color: var(--fundo); color: var(--texto);
     }
 
-    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 380px; gap: 30px; }
+    .header-image { width: 100%; max-width: 900px; margin: 0 auto; display: block; }
 
-    header { grid-column: 1 / -1; text-align: center; margin-bottom: 20px; }
-    header h1 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin: 0; color: var(--ink); }
-    header p { color: var(--soft); letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem; margin-top: 5px; }
+    .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 380px; gap: 25px; }
 
-    .card { background: var(--card); border-radius: 24px; padding: 30px; box-shadow: var(--shadow); border: 1px solid #ead9d1; }
-    h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-top: 0; border-bottom: 1px solid var(--accent-light); padding-bottom: 10px; margin-bottom: 20px; }
+    .card { background: var(--branco); border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: var(--primaria); border-bottom: 2px solid var(--secundaria); padding-bottom: 8px; margin-top: 0; font-size: 1.4rem; }
 
-    .form-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-    .full-width { grid-column: 1 / -1; }
-    label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; color: var(--ink); }
+    .form-group { margin-bottom: 15px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    label { display: block; font-weight: 800; font-size: 0.85rem; margin-bottom: 5px; }
     input, select, textarea {
-      width: 100%; padding: 12px; border: 1px solid #ead9d1; border-radius: 12px; 
-      font-family: inherit; font-size: 0.95rem; outline: none; transition: 0.2s;
+      width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px; 
+      font-family: inherit; outline: none; transition: 0.3s;
     }
+    input:focus { border-color: var(--secundaria); }
 
-    .servico-box { background: #fdfaf8; padding: 20px; border-radius: 18px; border: 1px solid var(--accent-light); margin-top: 20px; }
-    .btn { border: none; border-radius: 12px; padding: 12px 20px; cursor: pointer; font-weight: 700; transition: 0.3s; }
-    .btn-add { background: var(--accent); color: white; width: 100%; margin-top: 10px; }
+    /* Estilo para Opções Radio/Check */
+    .opcoes-flex { display: flex; gap: 15px; margin-top: 5px; flex-wrap: wrap; }
+    .opcao-item { background: #f4f4f9; padding: 10px 15px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; flex: 1; text-align: center; font-size: 0.9rem; }
+    input[type="radio"] { display: none; }
+    input[type="radio"]:checked + .opcao-item { border-color: var(--primaria); background: #f0e6f5; color: var(--primaria); font-weight: bold; }
+
+    /* Seção de Serviços */
+    .servico-add { background: var(--fundo); padding: 15px; border-radius: 15px; }
+    .btn { border: none; border-radius: 10px; padding: 12px; cursor: pointer; font-weight: 800; transition: 0.3s; width: 100%; }
+    .btn-add { background: var(--secundaria); color: white; margin-top: 10px; }
+    .btn-wa { background: #25D366; color: white; font-size: 1.1rem; margin-top: 15px; }
+
+    .item-carrinho { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    .btn-remove { color: var(--destaque); cursor: pointer; font-weight: bold; }
+
+    .resumo-fixo { position: sticky; top: 20px; }
+    .total-box { font-size: 1.8rem; font-weight: 800; color: var(--primaria); margin: 10px 0; }
     
-    .item-no-carrinho { 
-      display: flex; justify-content: space-between; align-items: center; 
-      padding: 12px; border-bottom: 1px solid var(--accent-light); font-size: 0.9rem;
-    }
-    .remove-btn { color: #b87070; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
+    .pix-box { background: #f0fdfa; border: 1px dashed var(--secundaria); padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; }
+    .btn-copy { background: var(--primaria); color: white; padding: 5px 10px; border-radius: 5px; font-size: 0.7rem; cursor: pointer; display: inline-block; margin-top: 5px; }
 
-    .total-destaque { font-size: 1.8rem; color: var(--ink); margin-top: 10px; font-weight: 700; }
-    .btn-whatsapp { background: var(--whatsapp); color: white; width: 100%; padding: 18px; font-size: 1.1rem; margin-top: 20px; cursor: pointer; }
-
-    .pix-info { background: #e7f3ef; color: #2d5a4c; padding: 15px; border-radius: 12px; font-size: 0.85rem; margin-top: 20px; text-align: center; }
-
-    @media (max-width: 850px) { .container { grid-template-columns: 1fr; } }
+    @media (max-width: 850px) { .container { grid-template-columns: 1fr; } .resumo-fixo { position: static; } }
   </style>
 </head>
 <body>
 
-<header>
-  <p>Crispoparte | Design Digital</p>
-  <h1>Dados do Convite</h1>
-</header>
+<img src="minha-arte.jpg" alt="Crispoparte" class="header-image">
 
 <div class="container">
   <main>
     <div class="card">
-      <h2>Informações do Evento</h2>
-      <div class="form-section">
-        <div class="full-width"><label>Nome do(a) Aniversariante*</label><input type="text" id="nome_aniv"></div>
-        <div><label>Idade*</label><input type="text" id="idade_aniv"></div>
-        <div><label>Tema*</label><input type="text" id="tema_evento"></div>
-        <div><label>Data*</label><input type="date" id="data_evento"></div>
-        <div><label>Hora*</label><input type="time" id="hora_evento"></div>
-        <div class="full-width"><label>Local do Evento*</label><input type="text" id="local_nome"></div>
-        <div class="full-width"><label>Endereço Completo</label><textarea id="local_endereco" rows="2"></textarea></div>
+      <h2>1. Informações do Responsável</h2>
+      <div class="grid">
+        <div class="form-group"><label>Nome do responsável*</label><input type="text" id="resp_nome"></div>
+        <div class="form-group"><label>WhatsApp do responsável*</label><input type="text" id="resp_wa" placeholder="(00) 00000-0000"></div>
       </div>
+    </div>
 
-      <h2>Personalização</h2>
-      <div class="form-section">
-        <div class="full-width">
-          <label>Cenas 02 e 04 (Alterar frases?)</label>
-          <textarea id="frases_personalizadas" rows="2" placeholder="Digite aqui caso queira mudar os textos padrão das cenas 02 e 04."></textarea>
-        </div>
-        <div class="full-width">
-          <label>Cena 06 (Observação curta abaixo do endereço)</label>
-          <input type="text" id="obs_cena6" placeholder="Ex: Traje de banho obrigatório">
-        </div>
-        <div class="full-width">
-          <label>Música Preferida (Link ou Nome)</label>
-          <input type="text" id="musica_link" placeholder="Música específica ou 'mesma do modelo'">
+    <div class="card">
+      <h2>2. Dados do Evento</h2>
+      <div class="form-group">
+        <label>*Quantas pessoas estão fazendo aniversário?</label>
+        <div class="opcoes-flex">
+          <label><input type="radio" name="qtd_aniv" value="0" checked onchange="atualizarSoma()"> <div class="opcao-item">Uma (R$ 0,00)</div></label>
+          <label><input type="radio" name="qtd_aniv" value="10" onchange="atualizarSoma()"> <div class="opcao-item">Duas (R$ 10,00)</div></label>
         </div>
       </div>
 
-      <div class="servico-box">
-        <label>Escolha os itens do seu convite:</label>
-        <select id="select_servico" class="full-width" style="margin-bottom: 10px;"></select>
-        <button class="btn btn-add" onclick="adicionar()">+ Incluir no meu pedido</button>
-        <div id="carrinho_lista" style="margin-top:15px;"></div>
+      <div class="grid">
+        <div class="form-group"><label>*Nome aniversariante(s)</label><input type="text" id="evento_nome"></div>
+        <div class="form-group"><label>*Idade</label><input type="text" id="evento_idade"></div>
+        <div class="form-group"><label>*Data do evento</label><input type="date" id="evento_data"></div>
+        <div class="form-group"><label>*Hora</label><input type="time" id="evento_hora"></div>
       </div>
+
+      <div class="form-group"><label>*Tema:</label><input type="text" id="evento_tema"></div>
+      <div class="form-group"><label>*Local (Nome do espaço)</label><input type="text" id="evento_local"></div>
+      <div class="form-group"><label>*Endereço (Completo ou parcial)</label><textarea id="evento_end" rows="2"></textarea></div>
+    </div>
+
+    <div class="card">
+      <h2>3. Personalização e Extras</h2>
+      <div class="grid">
+        <div class="form-group">
+          <label>Fotos Adicionais (R$ 2,00 cada após a 2ª)</label>
+          <input type="number" id="qtd_fotos" value="0" min="0" oninput="atualizarSoma()">
+          <small>0 a 2 fotos: grátis</small>
+        </div>
+        <div class="form-group">
+          <label>Alterar Música?</label>
+          <div class="opcoes-flex">
+            <label><input type="radio" name="musica" value="0" checked onchange="atualizarSoma()"> <div class="opcao-item">Manter</div></label>
+            <label><input type="radio" name="musica" value="2" onchange="atualizarSoma()"> <div class="opcao-item">Trocar (+R$ 2,00)</div></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"><label>Link da Música (YouTube):</label><input type="text" id="musica_link"></div>
+
+      <div class="form-group">
+        <label>Alterar frases do convite? (Cena/Texto)</label>
+        <div class="opcoes-flex">
+          <label><input type="radio" name="frase_alt" value="Original" checked> <div class="opcao-item">Manter Original</div></label>
+          <label><input type="radio" name="frase_alt" value="Personalizada"> <div class="opcao-item">Personalizar</div></label>
+        </div>
+        <textarea id="frase_texto" rows="2" style="margin-top:10px;" placeholder="Sinalize a cena e o novo texto aqui..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Taxa de Urgência (24h úteis)?</label>
+        <div class="opcoes-flex">
+          <label><input type="radio" name="urgencia" value="0" checked onchange="atualizarSoma()"> <div class="opcao-item">Não</div></label>
+          <label><input type="radio" name="urgencia" value="20" onchange="atualizarSoma()"> <div class="opcao-item">Sim (+R$ 20,00)</div></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. O que deseja contratar?</h2>
+      <div class="servico-add">
+        <select id="select_servico"></select>
+        <button class="btn btn-add" onclick="addServico()">Incluir no meu pedido</button>
+      </div>
+      <div id="lista_pedido" style="margin-top:15px;"></div>
+    </div>
+
+    <div class="card">
+        <h2>Termos de Responsabilidade</h2>
+        <p style="font-size: 0.8rem; color: #666;">
+            Ao enviar este formulário, você confirma que os dados estão corretos. A produção inicia apenas após o pagamento via PIX. Prazo padrão: 3 dias úteis.
+        </p>
     </div>
   </main>
 
-  <aside>
-    <div class="card" style="position: sticky; top: 20px;">
+  <aside class="resumo-fixo">
+    <div class="card">
       <h2>Resumo do Valor</h2>
-      <p style="font-size: 0.85rem; color: var(--soft);">O início da produção ocorre após a confirmação do pagamento integral.</p>
-      
-      <div style="margin-top: 20px;">
-        <span style="font-size: 0.9rem; font-weight: 700;">VALOR TOTAL A VISTA:</span>
-        <div class="total-destaque" id="res_total">R$ 0,00</div>
+      <div id="calculo_detalhado" style="font-size: 0.85rem;">
+        </div>
+      <div class="total-box" id="total_final">R$ 0,00</div>
+
+      <div class="pix-box">
+        <strong style="color:var(--secundaria)">CHAVE PIX (CELULAR)</strong><br>
+        <span id="chave_pix">71993233142</span><br>
+        <div class="btn-copy" onclick="copiarPix()">Copiar Chave</div>
       </div>
 
-      <div class="pix-info">
-        <strong>PAGAMENTO EXCLUSIVO VIA PIX</strong><br>
-        Chave: 71993233142 (Cris Oliveira)
-      </div>
-
-      <button class="btn btn-whatsapp" onclick="enviar()">
-        Confirmar Pedido no WhatsApp 💌
-      </button>
+      <button class="btn btn-wa" onclick="enviarWhatsApp()">Enviar Pedido no WhatsApp</button>
     </div>
   </aside>
 </div>
 
 <script>
 // ============================================================
-// CONFIGURAÇÃO DE PREÇOS (MUDE AQUI QUANDO PRECISAR)
+// ÁREA INTELIGENTE - ALTERE VALORES E SERVIÇOS AQUI
 // ============================================================
-const SERVICOS = [
+const TABELA_SERVICOS = [
   { nome: "Convite Animado em Vídeo", preco: 75.00 },
-  { nome: "Arte Auxiliar em PDF (Botões)", preco: 30.00 },
-  { nome: "Taxa de Urgência (Entrega 24h)", preco: 25.00 },
-  { nome: "Remoção de Créditos Finais", preco: 10.00 },
-  { nome: "Convite Digital Estático", preco: 40.00 }
+  { nome: "Arte Auxiliar em PDF (Interativo)", preco: 30.00 },
+  { nome: "Convite Digital Estático", preco: 40.00 },
+  { nome: "Remoção de Créditos Finais", preco: 10.00 }
 ];
 // ============================================================
 
-let carrinho = [];
+let pedidoAdicional = [];
 
-// Carrega os serviços no select
-const select = document.getElementById('select_servico');
-SERVICOS.forEach((s, i) => {
-  let opt = document.createElement('option');
-  opt.value = i;
-  opt.text = `${s.nome} - R$ ${s.preco.toFixed(2)}`;
-  select.add(opt);
+// Carregar Select
+const sel = document.getElementById('select_servico');
+TABELA_SERVICOS.forEach((s, i) => {
+  let o = document.createElement('option');
+  o.value = i; o.text = `${s.nome} - R$ ${s.preco.toFixed(2)}`;
+  sel.add(o);
 });
 
-function adicionar() {
-  const s = SERVICOS[select.value];
-  if(carrinho.find(item => item.nome === s.nome)) return alert("Já adicionado!");
-  carrinho.push(s);
-  renderizar();
+function addServico() {
+  const s = TABELA_SERVICOS[sel.value];
+  if(pedidoAdicional.find(x => x.nome === s.nome)) return alert("Já incluído!");
+  pedidoAdicional.push(s);
+  renderizarPedido();
+  atualizarSoma();
 }
 
-function remover(i) {
-  carrinho.splice(i, 1);
-  renderizar();
+function removerServico(i) {
+  pedidoAdicional.splice(i, 1);
+  renderizarPedido();
+  atualizarSoma();
 }
 
-function renderizar() {
-  const lista = document.getElementById('carrinho_lista');
-  const total = carrinho.reduce((acc, it) => acc + it.preco, 0);
-  
-  lista.innerHTML = carrinho.map((it, i) => `
-    <div class="item-no-carrinho">
+function renderizarPedido() {
+  const lista = document.getElementById('lista_pedido');
+  lista.innerHTML = pedidoAdicional.map((it, i) => `
+    <div class="item-carrinho">
       <span>${it.nome}</span>
-      <span>R$ ${it.preco.toFixed(2)} <span class="remove-btn" onclick="remover(${i})">[X]</span></span>
+      <span>R$ ${it.preco.toFixed(2)} <span class="btn-remove" onclick="removerServico(${i})">x</span></span>
     </div>
   `).join('');
-  
-  document.getElementById('res_total').innerText = `R$ ${total.toFixed(2)}`;
 }
 
-function enviar() {
-  const total = document.getElementById('res_total').innerText;
-  const nome = document.getElementById('nome_aniv').value;
+function atualizarSoma() {
+  let soma = pedidoAdicional.reduce((a, b) => a + b.preco, 0);
   
-  if(!nome || carrinho.length === 0) return alert("Preencha o nome e selecione o serviço!");
-
-  let msg = `✨ *PEDIDO CONFIRMADO - CRISPOPARTE* ✨\n\n`;
-  msg += `👤 *Aniversariante:* ${nome} (${document.getElementById('idade_aniv').value})\n`;
-  msg += `🎈 *Tema:* ${document.getElementById('tema_evento').value}\n`;
-  msg += `📅 *Data:* ${document.getElementById('data_evento').value} às ${document.getElementById('hora_evento').value}\n`;
-  msg += `📍 *Local:* ${document.getElementById('local_nome').value}\n\n`;
+  // Aniversariante Extra
+  const taxaAniv = parseFloat(document.querySelector('input[name="qtd_aniv"]:checked').value);
   
-  msg += `📝 *DADOS DE CRIAÇÃO:* \n`;
-  msg += `- Frases (Cenas 02/04): ${document.getElementById('frases_personalizadas').value || 'Padrão'}\n`;
-  msg += `- Obs (Cena 06): ${document.getElementById('obs_cena6').value || 'Nenhuma'}\n`;
-  msg += `- Música: ${document.getElementById('musica_link').value || 'Padrão'}\n\n`;
+  // Fotos Extras
+  const fotos = parseInt(document.getElementById('qtd_fotos').value) || 0;
+  const taxaFotos = fotos > 2 ? (fotos - 2) * 2 : 0;
+  
+  // Música
+  const taxaMusica = parseFloat(document.querySelector('input[name="musica"]:checked').value);
+  
+  // Urgência
+  const taxaUrgencia = parseFloat(document.querySelector('input[name="urgencia"]:checked').value);
+  
+  const total = soma + taxaAniv + taxaFotos + taxaMusica + taxaUrgencia;
+  
+  document.getElementById('total_final').innerText = `R$ ${total.toFixed(2)}`;
+  
+  let resumoHtml = `
+    <div>Itens base: R$ ${soma.toFixed(2)}</div>
+    ${taxaAniv > 0 ? `<div>Aniv. Extra: R$ ${taxaAniv.toFixed(2)}</div>` : ''}
+    ${taxaFotos > 0 ? `<div>Fotos extras (${fotos}): R$ ${taxaFotos.toFixed(2)}</div>` : ''}
+    ${taxaMusica > 0 ? `<div>Troca Música: R$ ${taxaMusica.toFixed(2)}</div>` : ''}
+    ${taxaUrgencia > 0 ? `<div>Urgência: R$ ${taxaUrgencia.toFixed(2)}</div>` : ''}
+  `;
+  document.getElementById('calculo_detalhado').innerHTML = resumoHtml;
+}
 
-  msg += `🛒 *ÍTENS DO PEDIDO:* \n`;
-  carrinho.forEach(it => msg += `• ${it.nome}: R$ ${it.preco.toFixed(2)}\n`);
+function copiarPix() {
+  navigator.clipboard.writeText("71993233142");
+  alert("Chave Pix copiada!");
+}
 
-  msg += `\n💰 *TOTAL À VISTA (PIX):* \n`;
-  msg += `*${total}*\n\n`;
-  msg += `⚠️ _A produção será iniciada após o envio do comprovante._`;
+function enviarWhatsApp() {
+  const total = document.getElementById('total_final').innerText;
+  const nomeResp = document.getElementById('resp_nome').value;
+  if(!nomeResp || pedidoAdicional.length === 0) return alert("Preencha o nome do responsável e escolha o serviço!");
+
+  let msg = `✨ *NOVO PEDIDO - CRISPOPARTE* ✨\n\n`;
+  msg += `👤 *Responsável:* ${nomeResp}\n`;
+  msg += `📱 *WhatsApp:* ${document.getElementById('resp_wa').value}\n\n`;
+  
+  msg += `🎂 *Aniversariante:* ${document.getElementById('evento_nome').value}\n`;
+  msg += `🎈 *Tema:* ${document.getElementById('evento_tema').value}\n`;
+  msg += `📅 *Data/Hora:* ${document.getElementById('evento_data').value} às ${document.getElementById('evento_hora').value}\n`;
+  msg += `📍 *Local:* ${document.getElementById('evento_local').value}\n\n`;
+  
+  msg += `🎨 *DETALHES:* \n`;
+  msg += `- Fotos: ${document.getElementById('qtd_fotos').value}\n`;
+  msg += `- Música: ${document.getElementById('musica_link').value || 'Original'}\n`;
+  msg += `- Frases: ${document.querySelector('input[name="frase_alt"]:checked').value}\n`;
+  if(document.getElementById('frase_texto').value) msg += `  _${document.getElementById('frase_texto').value}_\n`;
+
+  msg += `\n🛒 *CONTRATADOS:* \n`;
+  pedidoAdicional.forEach(it => msg += `• ${it.nome}\n`);
+  
+  msg += `\n💰 *TOTAL À VISTA:* ${total}\n`;
+  msg += `_(Pagamento via PIX confirmado)_`;
 
   window.open(`https://wa.me/5571993233142?text=${encodeURIComponent(msg)}`, '_blank');
 }
+
+// Inicia soma
+atualizarSoma();
 </script>
 
 </body>
