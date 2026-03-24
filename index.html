@@ -31,11 +31,8 @@
         input:focus { border-color: var(--secundaria); outline: none; }
 
         .sub-secao { background: #fdfaff; padding: 15px; border-radius: 12px; border: 1px solid #efe5f5; margin-top: 15px; display: none; }
-        
-        /* Blocos de Perguntas em Sequência */
         .bloco-pergunta { background: #f8f9fa; padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid #eee; }
 
-        /* Estilo do Carrinho / Resumo */
         .resumo-box { background: #fffcf0; border: 2px solid #f3e5ab; padding: 15px; border-radius: 12px; margin-top: 20px; }
         .item-lista { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 14px; }
         .btn-remover { color: var(--destaque); cursor: pointer; font-weight: bold; margin-left: 10px; }
@@ -54,7 +51,7 @@
         .btn-whatsapp { background: #25D366; color: white; font-size: 18px; margin-top: 15px; }
         button:disabled { background: #ccc !important; cursor: not-allowed; }
         
-        .btn-pix { background: var(--primaria); color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; width: auto; display: inline-block; margin-top: 10px; }
+        .btn-pix { background: var(--primaria); color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; width: auto; display: inline-block; margin-top: 10px; cursor:pointer; }
     </style>
 </head>
 <body>
@@ -66,13 +63,13 @@
         <h2>Solicitação de Pedido</h2>
 
         <label>Nome do responsável:*</label>
-        <input type="text" id="resp_nome" placeholder="Digite seu nome">
+        <input type="text" id="resp_nome">
 
         <label>WhatsApp do responsável:*</label>
-        <input type="text" id="resp_wa" placeholder="(00) 00000-0000">
+        <input type="text" id="resp_wa">
 
-        <label>Quantas pessoas estão fazendo aniversário?</label>
-        <select id="extra_aniversariante" onchange="atualizarSoma()">
+        <label>Aniversário para quantas pessoas?</label>
+        <select id="extra_aniv" onchange="atualizarSoma()">
             <option value="0">Uma pessoa (R$ 0,00)</option>
             <option value="10">Duas pessoas (+ R$ 10,00)</option>
         </select>
@@ -83,218 +80,182 @@
         <label>Idade:*</label>
         <input type="text" id="ev_idade">
 
-        <div style="display: flex; gap: 10px;">
-            <div style="flex:1;"><label>Data do evento:*</label><input type="date" id="ev_data"></div>
-            <div style="flex:1;"><label>Hora:*</label><input type="time" id="ev_hora"></div>
-        </div>
-
         <label>Tema:*</label>
         <input type="text" id="ev_tema">
+
+        <div style="display: flex; gap: 10px;">
+            <div style="flex:1;"><label>Data:*</label><input type="date" id="ev_data"></div>
+            <div style="flex:1;"><label>Hora:*</label><input type="time" id="ev_hora"></div>
+        </div>
 
         <label>Local (Nome do espaço):*</label>
         <input type="text" id="ev_local">
 
-        <label>Endereço completo ou parcial:*</label>
+        <label>Endereço completo:*</label>
         <textarea id="ev_end" rows="2"></textarea>
 
         <div class="bloco-pergunta">
             <label>Fotos (0 a 2 inclusas. R$ 2,00 por foto extra):</label>
             <input type="number" id="qtd_fotos" value="0" min="0" oninput="atualizarSoma()">
 
-            <label>Alterar música do convite?</label>
+            <label>Música do Convite:</label>
             <select id="opt_musica" onchange="atualizarSoma()">
                 <option value="0">Manter original (R$ 0,00)</option>
                 <option value="2">Trocar música (+ R$ 2,00)</option>
             </select>
-            <input type="text" id="link_musica" placeholder="Link da música (YouTube)" style="margin-top:8px;">
+            <input type="text" id="link_musica" placeholder="Link YouTube (se for trocar)">
 
-            <label>Alterar as frases das cenas 02 e 04?</label>
+            <label>Frases (Cenas 02 e 04):</label>
             <select id="opt_frases">
-                <option value="Original">Manter frases originais</option>
-                <option value="Personalizar">Personalizar frases</option>
+                <option value="Padrão">Manter frases originais</option>
+                <option value="Personalizada">Quero personalizar as frases</option>
             </select>
-            <textarea id="txt_frases" rows="2" placeholder="Digite a cena e o novo texto..." style="margin-top:8px;"></textarea>
+            <textarea id="txt_frases" rows="2" placeholder="Digite as alterações aqui..."></textarea>
 
-            <label>Taxa de Urgência (Entrega em 24h úteis)?</label>
+            <label>Taxa de Urgência (24h úteis)?</label>
             <select id="opt_urgencia" onchange="atualizarSoma()">
-                <option value="0">Não (Prazo normal 3 dias)</option>
-                <option value="20">Sim, tenho pressa! (+ R$ 20,00)</option>
+                <option value="0">Não (3 dias úteis)</option>
+                <option value="20">Sim (+ R$ 20,00)</option>
             </select>
         </div>
 
         <label style="color: var(--primaria); font-size: 16px; margin-top: 30px;">O que deseja contratar?</label>
         <select id="tipo_produto" onchange="mostrarSecao()">
-            <option value="">Selecione um serviço...</option>
+            <option value="">Selecione...</option>
             <option value="Convite">1 - Convite</option>
             <option value="Moldura">2 - Moldura para Fotos</option>
             <option value="Retrospectiva">3 - Retrospectiva</option>
         </select>
 
         <div id="sec_convite" class="sub-secao">
-            <label>Modelo do Convite:</label>
+            <label>Modelo:</label>
             <select id="mod_convite">
                 <option value="Retrato|30">Retrato (R$ 30,00)</option>
-                <option value="VideoAnimado|75">Vídeo Animado (R$ 50,00)</option>
-                <option value="InterativoUnica|50">Interativo Tela Única (R$ 50,00)</option>
-                <option value="InterativoTrailer|50">Interativo Vídeo Trailer (R$ 50,00)</option>
-                <option value="InterativoEstendida|70">Interativo Tela Estendida (R$ 70,00)</option>
-                <option value="CineIndividual|150">Cinematográfico Individual (R$ 150,00)</option>
-                <option value="CineQR|250">Cine Individual + Placa QR (R$ 250,00)</option>
+                <option value="Vídeo Animado|75">Vídeo Animado (R$ 75,00)</option>
+                <option value="Interativo Tela Única|50">Interativo Única (R$ 50,00)</option>
+                <option value="Interativo Trailer|50">Interativo Trailer (R$ 50,00)</option>
+                <option value="Interativo Estendida|70">Interativo Estendida (R$ 70,00)</option>
             </select>
-            <button type="button" class="btn-acao btn-incluir" onclick="adicionarAoPedido('Convite')">Incluir no meu pedido</button>
+            <button type="button" class="btn-acao btn-incluir" onclick="add('Convite')">Incluir no meu pedido</button>
         </div>
 
         <div id="sec_moldura" class="sub-secao">
-            <label>Opções de Moldura:</label>
+            <label>Moldura:</label>
             <select id="mod_moldura">
-                <option value="Unica|40">1 Moldura Única (R$ 40,00)</option>
-                <option value="Dupla|60">2 Molduras Dupla (R$ 60,00)</option>
-                <option value="Interativa|60">3 Molduras Interativa (R$ 60,00)</option>
+                <option value="Única|40">1 Moldura (R$ 40,00)</option>
+                <option value="Dupla|60">2 Molduras (R$ 60,00)</option>
             </select>
-            <button type="button" class="btn-acao btn-incluir" onclick="adicionarAoPedido('Moldura')">Incluir no meu pedido</button>
+            <button type="button" class="btn-acao btn-incluir" onclick="add('Moldura')">Incluir no meu pedido</button>
         </div>
 
         <div id="sec_retro" class="sub-secao">
-            <label>Faixa de Fotos:</label>
+            <label>Fotos:</label>
             <select id="mod_retro">
-                <option value="30-50|99.99">30 a 50 fotos (R$ 99,99)</option>
-                <option value="51-80|129.99">51 a 80 fotos (R$ 129,99)</option>
-                <option value="81-100|149.99">81 a 100 fotos (R$ 149,99)</option>
-                <option value="151-200|249.99">151 a 200 fotos (R$ 249,99)</option>
+                <option value="30-50 fotos|99.99">30-50 fotos (R$ 99,99)</option>
+                <option value="51-80 fotos|129.99">51-80 fotos (R$ 129,99)</option>
+                <option value="81-100 fotos|149.99">81-100 fotos (R$ 149,99)</option>
             </select>
-            <button type="button" class="btn-acao btn-incluir" onclick="adicionarAoPedido('Retrospectiva')">Incluir no meu pedido</button>
+            <button type="button" class="btn-acao btn-incluir" onclick="add('Retro')">Incluir no meu pedido</button>
         </div>
 
         <div class="resumo-box" id="caixa_resumo" style="display:none;">
-            <strong style="color: var(--primaria);">Resumo do Pedido:</strong>
-            <div id="lista_itens_carrinho" style="margin-top:10px;"></div>
+            <strong style="color: var(--primaria);">Ítens no Carrinho:</strong>
+            <div id="lista_carrinho" style="margin-top:10px;"></div>
         </div>
 
         <div class="termos-container">
-            <div class="termos-texto">
-                <strong>Termo de Responsabilidade:</strong><br>
-                1. Produção inicia após confirmação do pagamento integral via PIX.<br>
-                2. Prazo de entrega: até 3 dias úteis (exceto taxa de urgência).<br>
-                3. O cliente é responsável pela conferência de todos os dados digitados.<br>
-                4. Proibida a revenda ou edição deste material por terceiros.
-            </div>
             <label class="checkbox-alinhado">
-                <input type="checkbox" id="check_termos" onchange="validarBotao()">
-                Li e concordo com os termos
+                <input type="checkbox" id="check_termos" onchange="validar()">
+                Li e concordo com os termos da Crispoparte
             </label>
         </div>
 
         <div id="total-container">
-            <span>VALOR DO INVESTIMENTO:</span>
-            <strong class="valor-grande" id="display_total">R$ 0,00</strong>
-            <div class="btn-pix" onclick="copiarPix()">Copiar Chave Pix (71993233142)</div>
+            <span>TOTAL DO INVESTIMENTO:</span>
+            <strong class="valor-grande" id="res_total">R$ 0,00</strong>
+            <div class="btn-pix" onclick="copiarPix()">Copiar Chave Pix Celular</div>
         </div>
 
-        <button type="button" class="btn-acao btn-whatsapp" id="btnEnviarWA" disabled onclick="enviarWhatsApp()">
-            Confirmar Pedido no WhatsApp 💌
+        <button type="button" class="btn-acao btn-whatsapp" id="btnEnviar" disabled onclick="enviar()">
+            Enviar Pedido Completo WhatsApp 💌
         </button>
     </div>
 </form>
 
 <script>
-let carrinho = [];
+let itens = [];
 
 function mostrarSecao() {
-    const tipo = document.getElementById("tipo_produto").value;
-    document.getElementById("sec_convite").style.display = tipo === "Convite" ? "block" : "none";
-    document.getElementById("sec_moldura").style.display = tipo === "Moldura" ? "block" : "none";
-    document.getElementById("sec_retro").style.display = tipo === "Retrospectiva" ? "block" : "none";
+    const t = document.getElementById("tipo_produto").value;
+    document.getElementById("sec_convite").style.display = t === "Convite" ? "block" : "none";
+    document.getElementById("sec_moldura").style.display = t === "Moldura" ? "block" : "none";
+    document.getElementById("sec_retro").style.display = t === "Retrospectiva" ? "block" : "none";
 }
 
-function adicionarAoPedido(tipo) {
-    let selectId = tipo === 'Convite' ? 'mod_convite' : (tipo === 'Moldura' ? 'mod_moldura' : 'mod_retro');
-    let dados = document.getElementById(selectId).value.split('|');
-    let nomeServico = tipo + ": " + dados[0];
-    let precoServico = parseFloat(dados[1]);
-
-    if(carrinho.find(item => item.nome === nomeServico)) return alert("Item já adicionado!");
-
-    carrinho.push({ nome: nomeServico, preco: precoServico });
-    renderizarCarrinho();
+function add(tipo) {
+    let sid = tipo === 'Convite' ? 'mod_convite' : (tipo === 'Moldura' ? 'mod_moldura' : 'mod_retro');
+    let d = document.getElementById(sid).value.split('|');
+    itens.push({ nome: tipo + ": " + d[0], preco: parseFloat(d[1]) });
+    render();
     atualizarSoma();
 }
 
-function removerItem(index) {
-    carrinho.splice(index, 1);
-    renderizarCarrinho();
+function remover(i) {
+    itens.splice(i, 1);
+    render();
     atualizarSoma();
 }
 
-function renderizarCarrinho() {
-    const lista = document.getElementById("lista_itens_carrinho");
-    const caixa = document.getElementById("caixa_resumo");
-    
-    if(carrinho.length === 0) {
-        caixa.style.display = "none";
-        return;
-    }
-    
-    caixa.style.display = "block";
-    lista.innerHTML = carrinho.map((item, index) => `
-        <div class="item-lista">
-            <span>${item.nome}</span>
-            <span>R$ ${item.preco.toFixed(2).replace('.',',')} <span class="btn-remover" onclick="removerItem(${index})">x</span></span>
-        </div>
-    `).join('');
+function render() {
+    const l = document.getElementById("lista_carrinho");
+    const c = document.getElementById("caixa_resumo");
+    c.style.display = itens.length ? "block" : "none";
+    l.innerHTML = itens.map((it, idx) => `<div class="item-lista"><span>${it.nome}</span><span>R$ ${it.preco.toFixed(2)} <span class="btn-remover" onclick="remover(${idx})">x</span></span></div>`).join('');
 }
 
 function atualizarSoma() {
-    let total = carrinho.reduce((acc, item) => acc + item.preco, 0);
-    
-    // Só soma extras se houver algo no carrinho
-    if (total > 0) {
-        total += parseFloat(document.getElementById("extra_aniversariante").value);
+    let total = itens.reduce((a, b) => a + b.preco, 0);
+    if(total > 0) {
+        total += parseFloat(document.getElementById("extra_aniv").value);
         total += parseFloat(document.getElementById("opt_musica").value);
         total += parseFloat(document.getElementById("opt_urgencia").value);
-        
-        const fotos = parseInt(document.getElementById("qtd_fotos").value) || 0;
-        total += (fotos > 2 ? (fotos - 2) * 2 : 0);
+        const f = parseInt(document.getElementById("qtd_fotos").value) || 0;
+        total += (f > 2 ? (f - 2) * 2 : 0);
     }
-
-    document.getElementById("display_total").innerText = "R$ " + total.toFixed(2).replace('.', ',');
+    document.getElementById("res_total").innerText = "R$ " + total.toFixed(2).replace('.', ',');
 }
 
-function validarBotao() {
-    const check = document.getElementById("check_termos").checked;
-    document.getElementById("btnEnviarWA").disabled = !check;
-}
+function validar() { document.getElementById("btnEnviar").disabled = !document.getElementById("check_termos").checked; }
+function copiarPix() { navigator.clipboard.writeText("71993233142"); alert("Chave Pix Copiada!"); }
 
-function copiarPix() {
-    navigator.clipboard.writeText("71993233142").then(() => alert("Chave Pix Copiada!"));
-}
+function enviar() {
+    const nomeR = document.getElementById("resp_nome").value;
+    const tema = document.getElementById("ev_tema").value;
+    if(!nomeR || !tema || itens.length === 0) return alert("Preencha o Responsável, Tema e Adicione um serviço!");
 
-function enviarWhatsApp() {
-    const total = document.getElementById("display_total").innerText;
-    const nome = document.getElementById("resp_nome").value;
-    
-    if(!nome || carrinho.length === 0) return alert("Preencha seu nome e inclua um serviço no pedido!");
+    let msg = `✨ *PEDIDO CONFIRMADO - CRISPOPARTE* ✨\n\n`;
+    msg += `👤 *Responsável:* ${nomeR}\n`;
+    msg += `🎂 *Aniversariante:* ${document.getElementById("ev_nome").value} (${document.getElementById("ev_idade").value})\n`;
+    msg += `⚽ *Tema:* ${tema}\n`;
+    msg += `📅 *Data:* ${document.getElementById("ev_data").value.split('-').reverse().join('/')} às ${document.getElementById("ev_hora").value}\n`;
+    msg += `📍 *Local:* ${document.getElementById("ev_local").value}\n`;
+    msg += `🏠 *Endereço:* ${document.getElementById("ev_end").value}\n\n`;
 
-    let msg = `✨ *PEDIDO CRISPOPARTE* ✨\n\n`;
-    msg += `👤 *Responsável:* ${nome}\n`;
-    msg += `🎂 *Aniversariante:* ${document.getElementById("ev_nome").value}\n`;
-    msg += `📅 *Data:* ${document.getElementById("ev_data").value} às ${document.getElementById("ev_hora").value}\n`;
-    msg += `📍 *Local:* ${document.getElementById("ev_local").value}\n\n`;
-    
-    msg += `🛒 *ÍTENS CONTRATADOS:* \n`;
-    carrinho.forEach(it => msg += `• ${it.nome}\n`);
-    
-    msg += `\n🎨 *PERSONALIZAÇÃO:* \n`;
+    msg += `📋 *ÍTENS DO PEDIDO:* \n`;
+    itens.forEach(it => msg += `* ${it.nome}: R$ ${it.preco.toFixed(2)}\n`);
+
+    msg += `\n🎨 *DADOS DE CRIAÇÃO:* \n`;
     msg += `- Fotos: ${document.getElementById("qtd_fotos").value}\n`;
-    msg += `- Música: ${document.getElementById("opt_musica").selectedOptions[0].text}\n`;
+    msg += `- Música: ${document.getElementById("link_musica").value || document.getElementById("opt_musica").selectedOptions[0].text}\n`;
+    msg += `- Frases: ${document.getElementById("txt_frases").value || document.getElementById("opt_frases").value}\n`;
     msg += `- Urgência: ${document.getElementById("opt_urgencia").selectedOptions[0].text}\n`;
 
-    msg += `\n💰 *INVESTIMENTO TOTAL: ${total}*\n`;
-    msg += `-------------------------------------------\n`;
+    msg += `\n💰 *TOTAL À VISTA (PIX):* \n`;
+    msg += `*${document.getElementById("res_total").innerText}*\n\n`;
     msg += `✅ _Li e concordo com os termos. Aguardo o início da produção._`;
 
     window.open(`https://wa.me/5571993233142?text=${encodeURIComponent(msg)}`, '_blank');
 }
 </script>
-
 </body>
 </html>
