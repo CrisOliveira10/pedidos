@@ -51,6 +51,10 @@ Lei 9.610/98 – Direitos Autorais.
         button:disabled { background: #ccc !important; cursor: not-allowed; }
         
         .btn-pix { background: var(--primaria); color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; width: auto; display: inline-block; margin-top: 10px; cursor:pointer; }
+
+        /* Estilo para itens de preço fixo */
+        .preco-fixo-info { background: #f0fdfa; border: 2px solid var(--secundaria); border-radius: 10px; padding: 12px 15px; margin-top: 10px; font-size: 15px; color: var(--texto); }
+        .preco-fixo-info strong { color: var(--primaria); font-size: 18px; }
     </style>
 </head>
 <body>
@@ -127,12 +131,13 @@ Lei 9.610/98 – Direitos Autorais.
             <option value="Convite">1 - Convite</option>
             <option value="Moldura">2 - Moldura para Fotos</option>
             <option value="Retrospectiva">3 - Retrospectiva</option>
-             <option value="Idparaevento">4 - ID para evento</option>
-             <option value="Idparamarca">5 - ID para marca</option>
-             <option value="Mascotinho">6 - Mascotinho</option>
-            <option value="Musica">7 - Música personalizada</option>
+            <option value="Idparaevento">4 - ID para Evento (R$ 100,00)</option>
+            <option value="Idparamarca">5 - ID para Marca (R$ 200,00)</option>
+            <option value="Mascotinho">6 - Mascotinho</option>
+            <option value="Musica">7 - Música Personalizada (R$ 60,00)</option>
         </select>
 
+        <!-- SEÇÃO 1: Convite -->
         <div id="sec_convite" class="sub-secao">
             <label>Modelo do Convite:</label>
             <select id="mod_convite" onchange="checarCategoria()">
@@ -148,9 +153,7 @@ Lei 9.610/98 – Direitos Autorais.
                 <option value="Cine Categoria|90">Cinematográfico por Categoria (Infantil/Adulto)</option>
                 <option value="Tecnológico|90">Tecnológico Vídeo 2 botões</option>
                 <option value="Livrinho|90">Livrinho</option>
-               
             </select>
-
             <div id="extra_cat" style="display:none; margin-top:10px;">
                 <label>Categoria do Evento:</label>
                 <select id="cat_evento" onchange="atualizarPrecoCine()">
@@ -161,6 +164,7 @@ Lei 9.610/98 – Direitos Autorais.
             <button type="button" class="btn-acao btn-incluir" onclick="add('Convite')">Incluir no meu pedido</button>
         </div>
 
+        <!-- SEÇÃO 2: Moldura -->
         <div id="sec_moldura" class="sub-secao">
             <label>Opções de Moldura:</label>
             <select id="mod_moldura">
@@ -170,18 +174,8 @@ Lei 9.610/98 – Direitos Autorais.
             </select>
             <button type="button" class="btn-acao btn-incluir" onclick="add('Moldura')">Incluir no meu pedido</button>
         </div>
-        
-        <div id="sec_mascotinho" class="sub-secao">
-            <label>Opções de Mascotinho:</label>
-            <select id="mod_mascotinho">
-                <option value="Única|60">1 Mascotinho (R$ 60,00)</option>
-                <option value="Dupla|90">2 Mascotinho variação (R$ 90,00)</option>
-                <option value="Três|120">3 Mascotinho variações (R$ 120,00)</option>
-            </select>
-            <button type="button" class="btn-acao btn-incluir" onclick="add('Mascotinho')">Incluir no meu pedido</button>
-        </div>
 
-
+        <!-- SEÇÃO 3: Retrospectiva -->
         <div id="sec_retro" class="sub-secao">
             <label>Faixa de Fotos:</label>
             <select id="mod_retro">
@@ -195,6 +189,45 @@ Lei 9.610/98 – Direitos Autorais.
             <button type="button" class="btn-acao btn-incluir" onclick="add('Retro')">Incluir no meu pedido</button>
         </div>
 
+        <!-- SEÇÃO 4: ID para Evento (preço fixo R$ 100,00) -->
+        <div id="sec_idparaevento" class="sub-secao">
+            <div class="preco-fixo-info">
+                📋 <strong>ID para Evento</strong><br>
+                Valor: <strong>R$ 100,00</strong>
+            </div>
+            <button type="button" class="btn-acao btn-incluir" onclick="addFixo('ID para Evento', 100)">Incluir no meu pedido</button>
+        </div>
+
+        <!-- SEÇÃO 5: ID para Marca (preço fixo R$ 200,00) -->
+        <div id="sec_idparamarca" class="sub-secao">
+            <div class="preco-fixo-info">
+                🏷️ <strong>ID para Marca</strong><br>
+                Valor: <strong>R$ 200,00</strong>
+            </div>
+            <button type="button" class="btn-acao btn-incluir" onclick="addFixo('ID para Marca', 200)">Incluir no meu pedido</button>
+        </div>
+
+        <!-- SEÇÃO 6: Mascotinho -->
+        <div id="sec_mascotinho" class="sub-secao">
+            <label>Opções de Mascotinho:</label>
+            <select id="mod_mascotinho">
+                <option value="1 variação|60">1 Mascotinho (R$ 60,00)</option>
+                <option value="2 variações|90">2 Mascotinhos variação (R$ 90,00)</option>
+                <option value="3 variações|120">3 Mascotinhos variações (R$ 120,00)</option>
+            </select>
+            <button type="button" class="btn-acao btn-incluir" onclick="add('Mascotinho')">Incluir no meu pedido</button>
+        </div>
+
+        <!-- SEÇÃO 7: Música Personalizada (preço fixo R$ 60,00) -->
+        <div id="sec_musica" class="sub-secao">
+            <div class="preco-fixo-info">
+                🎵 <strong>Música Personalizada</strong><br>
+                Valor: <strong>R$ 60,00</strong>
+            </div>
+            <button type="button" class="btn-acao btn-incluir" onclick="addFixo('Música Personalizada', 60)">Incluir no meu pedido</button>
+        </div>
+
+        <!-- Resumo do carrinho -->
         <div class="resumo-box" id="caixa_resumo" style="display:none;">
             <strong style="color: var(--primaria);">Ítens no Pedido:</strong>
             <div id="lista_carrinho" style="margin-top:10px;"></div>
@@ -222,12 +255,43 @@ Lei 9.610/98 – Direitos Autorais.
 <script>
 let itens = [];
 
+// ============================================================
+// FUNÇÃO: mostrarSecao
+// Exibe a seção correta conforme o serviço selecionado.
+//
+// ✅ COMO ADICIONAR UM NOVO ITEM FUTURAMENTE:
+// 1. Adicione um <option value="NomeChave"> no <select id="tipo_produto">
+// 2. Crie um <div id="sec_nomechave" class="sub-secao"> no HTML
+// 3. Adicione uma linha aqui embaixo no formato:
+//    document.getElementById("sec_nomechave").style.display = t === "NomeChave" ? "block" : "none";
+// 4. Se for preço fixo: use o botão onclick="addFixo('Nome do Item', PRECO)"
+//    Se tiver opções de modelo: use onclick="add('NomeChave')" e adicione o ID do select no mapa abaixo
+// ============================================================
 function mostrarSecao() {
     const t = document.getElementById("tipo_produto").value;
-    document.getElementById("sec_convite").style.display = t === "Convite" ? "block" : "none";
-    document.getElementById("sec_moldura").style.display = t === "Moldura" ? "block" : "none";
-    document.getElementById("sec_retro").style.display = t === "Retrospectiva" ? "block" : "none";
-     document.getElementById("sec_mascotinho").style.display = t === "Mascotinho" ? "block" : "none";
+
+    // Lista de todas as seções - adicione novos IDs aqui
+    const todasSecoes = [
+        "sec_convite", "sec_moldura", "sec_retro",
+        "sec_idparaevento", "sec_idparamarca",
+        "sec_mascotinho", "sec_musica"
+    ];
+
+    // Esconde todas primeiro
+    todasSecoes.forEach(id => document.getElementById(id).style.display = "none");
+
+    // Mapeamento: valor do option → ID da seção
+    const mapa = {
+        "Convite":      "sec_convite",
+        "Moldura":      "sec_moldura",
+        "Retrospectiva":"sec_retro",
+        "Idparaevento": "sec_idparaevento",
+        "Idparamarca":  "sec_idparamarca",
+        "Mascotinho":   "sec_mascotinho",
+        "Musica":       "sec_musica"
+    };
+
+    if (mapa[t]) document.getElementById(mapa[t]).style.display = "block";
 }
 
 function checarCategoria() {
@@ -236,19 +300,46 @@ function checarCategoria() {
     document.getElementById("extra_cat").style.display = listaExtra.includes(mod) ? "block" : "none";
 }
 
+// ============================================================
+// FUNÇÃO: add
+// Para serviços que têm um <select> com opções de modelo.
+// Mapeamento: tipo → ID do select correspondente
+// ============================================================
 function add(tipo) {
-    let sid = tipo === 'Convite' ? 'mod_convite' : (tipo === 'Moldura' ? 'mod_moldura' : 'mod_retro');
-    let sel = document.getElementById(sid);
-    let d = sel.value.split('|');
+    // Mapa: tipo → ID do select de modelo
+    const mapaSelects = {
+        "Convite":    "mod_convite",
+        "Moldura":    "mod_moldura",
+        "Retro":      "mod_retro",
+        "Mascotinho": "mod_mascotinho"
+    };
+
+    const sid = mapaSelects[tipo];
+    if (!sid) return;
+
+    const sel = document.getElementById(sid);
+    const d = sel.value.split('|');
     let nomeFinal = tipo + " " + d[0];
     let precoFinal = parseFloat(d[1]);
 
-    if(tipo === 'Convite' && document.getElementById("extra_cat").style.display === "block") {
+    // Caso especial: Convite com categoria (Cine Categoria, Tecnológico, Livrinho)
+    if (tipo === 'Convite' && document.getElementById("extra_cat").style.display === "block") {
         precoFinal = parseFloat(document.getElementById("cat_evento").value);
         nomeFinal += " (" + document.getElementById("cat_evento").selectedOptions[0].text.split(' ')[0] + ")";
     }
 
     itens.push({ nome: nomeFinal, preco: precoFinal });
+    render();
+    atualizarSoma();
+}
+
+// ============================================================
+// FUNÇÃO: addFixo
+// Para serviços com preço fixo, sem opções de modelo.
+// Uso: addFixo('Nome do Item', 100)
+// ============================================================
+function addFixo(nome, preco) {
+    itens.push({ nome: nome, preco: preco });
     render();
     atualizarSoma();
 }
@@ -259,12 +350,18 @@ function render() {
     const l = document.getElementById("lista_carrinho");
     const c = document.getElementById("caixa_resumo");
     c.style.display = itens.length ? "block" : "none";
-    l.innerHTML = itens.map((it, idx) => `<div class="item-lista"><span>${it.nome}</span><span>R$ ${it.preco.toFixed(2).replace('.',',')} <span class="btn-remover" onclick="remover(${idx})">x</span></span></div>`).join('');
+    l.innerHTML = itens.map((it, idx) =>
+        `<div class="item-lista">
+            <span>${it.nome}</span>
+            <span>R$ ${it.preco.toFixed(2).replace('.',',')} 
+            <span class="btn-remover" onclick="remover(${idx})">x</span></span>
+        </div>`
+    ).join('');
 }
 
 function atualizarSoma() {
     let total = itens.reduce((a, b) => a + b.preco, 0);
-    if(total > 0) {
+    if (total > 0) {
         total += parseFloat(document.getElementById("extra_aniv").value);
         total += parseFloat(document.getElementById("opt_musica").value);
         total += parseFloat(document.getElementById("opt_urgencia").value);
@@ -280,7 +377,7 @@ function copiarPix() { navigator.clipboard.writeText("71993233142"); alert("Chav
 function enviar() {
     const nomeR = document.getElementById("resp_nome").value;
     const tema = document.getElementById("ev_tema").value;
-    if(!nomeR || !tema || itens.length === 0) return alert("Preencha Responsável, Tema e Adicione um serviço!");
+    if (!nomeR || !tema || itens.length === 0) return alert("Preencha Responsável, Tema e Adicione um serviço!");
 
     let msg = `✨ *PEDIDO CONFIRMADO - CRISPOPARTE* ✨\n\n`;
     msg += `🎂 *Aniversariante:* ${document.getElementById("ev_nome").value} (${document.getElementById("ev_idade").value})\n`;
